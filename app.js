@@ -13,7 +13,7 @@ app.use(express.static('./post-news'))
 
 app.get("/", (req, res) => {
     console.log("Hello from root");
-    res.send("Hello from rooooooot")
+    res.sendfile('index.html')
 })
 
 const latestNewsRoute = require('./routes/latest.js')
