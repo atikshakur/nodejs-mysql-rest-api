@@ -4,7 +4,7 @@ const morgan = require("morgan")
 const mysql = require('mysql')
 const bodyParser = require('body-parser')
 
-app.use(morgan("short"))
+app.use(morgan("combined"))
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())

@@ -2,6 +2,7 @@ const express = require('express')
 const mysql = require('mysql')
 const router = express.Router()
 
+//Get all data
 router.get("/trending", (req, res) => {
     console.log("Responding to TRENDING NEWS route");
 
@@ -13,6 +14,16 @@ router.get("/trending", (req, res) => {
     })
 })
 
+//Get data by id
+router.get("/trending/:id", (req, res) => {
+    const userId = req.params.id
+    const queryString = "SELECT * FROM latest WHERE id = ?"
+    getConnection().query(queryString, [userId], (error, rows, fields) => {
+        res.json(rows)
+    })
+})
+
+//Post data using html form
 router.post('/post-trending-submitted', (req, res) => {
     console.log('title:' + req.body.submit_title);
 
@@ -31,7 +42,21 @@ router.post('/post-trending-submitted', (req, res) => {
             res.sendStatus(500)
             return
         }
+        else
+            res.send("Submitted")
         res.end()
+    })
+})
+
+//Delete data by id
+router.delete("/trending/:id", (req, res) => {
+    const queryString = "DELETE FROM trending WHERE id = ?";
+    const userID = req.params.id
+    getConnection().query(queryString, [userID], (error, rows, fields) => {
+        if (error)
+            console.log(error);
+        else
+            res.send("Deleted")
     })
 })
 
